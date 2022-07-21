@@ -104,32 +104,38 @@ const gameboard = (() => {
   return { drawGrid, reset };
 })();
 
-const Player = (marker) => {
+const Player = (name, marker) => {
+  const _name = name;
   const _marker = marker;
+
+  const getName = () => {
+    return _name;
+  };
 
   const getMarker = () => {
     return _marker;
   };
 
-  return { getMarker };
+  return { getName, getMarker };
 };
 
 const game = (() => {
   let _gameStarted;
+  let _player1;
+  let _player2;
   let _currentPlayer;
   let _winner;
-
-  const _player1 = Player("X");
-  const _player2 = Player("O");
-  const _status = document.querySelector(".status");
 
   const start = () => {
     if (_gameStarted) return;
 
+    const _playerNames = controls.getPlayerNames();
     _gameStarted = true;
+    _player1 = Player(_playerNames[0], "X");
+    _player2 = Player(_playerNames[1], "O");
     _currentPlayer = _player1;
     _winner = null;
-    _setStatusText(`${_player1.getMarker()}'s turn`);
+    controls.setStatusText(`${_player1.getName()}'s turn`);
   };
 
   const getCurrentPlayer = () => {
@@ -138,7 +144,7 @@ const game = (() => {
 
   const switchTurn = () => {
     _currentPlayer = _currentPlayer === _player1 ? _player2 : _player1;
-    _setStatusText(`${_currentPlayer.getMarker()}'s turn`);
+    controls.setStatusText(`${_currentPlayer.getName()}'s turn`);
   };
 
   const setWinner = (winner) => {
@@ -146,9 +152,9 @@ const game = (() => {
 
     _winner = winner;
     if (_winner === "tie") {
-      _setStatusText("It's a tie!");
+      controls.setStatusText("It's a tie!");
     } else {
-      _setStatusText(`${_winner.getMarker()} is the winner!`);
+      controls.setStatusText(`${_winner.getName()} is the winner!`);
     }
   };
 
@@ -160,15 +166,11 @@ const game = (() => {
     return _winner !== null;
   };
 
-  const _setStatusText = (msg) => {
-    _status.textContent = msg;
-  };
-
   const reset = () => {
     _gameStarted = false;
     _currentPlayer = null;
     _winner = null;
-    _setStatusText("");
+    controls.setStatusText("");
     gameboard.reset();
   };
 
@@ -184,11 +186,44 @@ const game = (() => {
 })();
 
 const controls = (() => {
-  const _startBtn = document.querySelector("button.start");
+  const _form = document.querySelector(".modal-content");
+  const _inputP1 = document.getElementById("p1name");
+  const _inputP2 = document.getElementById("p2name");
+  const _modal = document.querySelector(".modal");
   const _resetBtn = document.querySelector("button.reset");
+  const _startBtn = document.querySelector("button.start");
+  const _status = document.querySelector(".status");
 
-  _startBtn.addEventListener("click", () => game.start());
+  _form.addEventListener("submit", (e) => _submitForm(e));
   _resetBtn.addEventListener("click", () => game.reset());
+  _startBtn.addEventListener("click", () => _toggleModal());
+
+  const _submitForm = (e) => {
+    e.preventDefault();
+
+    _toggleModal();
+    game.start();
+  };
+
+  const _toggleModal = () => {
+    if (_modal.classList.contains("active")) {
+      _modal.classList.remove("active");
+      _modal.style.display = "none";
+    } else {
+      _modal.classList.add("active");
+      _modal.style.display = "block";
+    }
+  };
+
+  const getPlayerNames = () => {
+    return [_inputP1.value, _inputP2.value];
+  };
+
+  const setStatusText = (msg) => {
+    _status.textContent = msg;
+  };
+
+  return { getPlayerNames, setStatusText };
 })();
 
 gameboard.drawGrid();

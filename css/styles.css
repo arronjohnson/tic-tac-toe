@@ -33,6 +33,54 @@ a:hover {
   cursor: pointer;
 }
 
+.modal {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 6px;
+  left: 50%;
+  padding: 32px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+input {
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  height: 34px;
+  padding: 6px;
+  width: min(300px, 80vw);
+}
+
+.button-container {
+  display: flex;
+  justify-content: right;
+}
+
+button.confirm {
+  margin-top: 32px;
+}
+
 .header {
   text-align: center;
 }
@@ -76,14 +124,17 @@ button:active {
   transform: scale(0.96);
 }
 
+button.confirm,
 button.start {
   background-color: var(--accent);
 }
 
+button.confirm:hover,
 button.start:hover {
   background-color: #5da0fd;
 }
 
+button.confirm:active,
 button.start:active {
   background-color: #86b8fd;
 }
