@@ -168,8 +168,6 @@ const game = (() => {
 
   const reset = () => {
     _gameStarted = false;
-    _currentPlayer = null;
-    _winner = null;
     controls.setStatusText("");
     gameboard.reset();
   };
@@ -196,7 +194,11 @@ const controls = (() => {
 
   _form.addEventListener("submit", (e) => _submitForm(e));
   _resetBtn.addEventListener("click", () => game.reset());
-  _startBtn.addEventListener("click", () => _toggleModal());
+  _startBtn.addEventListener("click", () => {
+    if (!game.isStarted()) {
+      _toggleModal();
+    }
+  });
 
   const _submitForm = (e) => {
     e.preventDefault();
