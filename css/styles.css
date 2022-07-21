@@ -2,7 +2,7 @@
 
 :root {
   --accent: #3689fc;
-  --grid-borders: 1px solid #000;
+  --grid-borders: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 html {
@@ -17,11 +17,11 @@ html {
 }
 
 body {
-  align-items: center;
+  background-color: #fafafa;
   display: flex;
   flex-direction: column;
   font-family: "Roboto", sans-serif;
-  justify-content: center;
+  justify-content: space-between;
   min-height: 100%;
 }
 
@@ -84,17 +84,20 @@ button.confirm {
 }
 
 .header {
-  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  padding: 32px;
 }
 
 .header h1 {
-  margin: 0 0 32px;
+  margin: 0;
 }
 
 main {
+  align-items: center;
   display: grid;
   gap: 32px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr auto 1fr;
 }
 
 .controls,
@@ -154,8 +157,8 @@ button.reset:active {
 }
 
 .grid-container {
-  border-bottom: var(--grid-borders);
-  border-left: var(--grid-borders);
+  background-color: #fff;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   height: 500px;
@@ -168,8 +171,6 @@ button.reset:active {
 }
 
 .grid-cell {
-  border-right: var(--grid-borders);
-  border-top: var(--grid-borders);
   display: grid;
   height: 100%;
   place-content: center;
@@ -177,8 +178,17 @@ button.reset:active {
   width: 100%;
 }
 
+.grid-row:not(:last-child) {
+  border-bottom: var(--grid-borders);
+}
+
+.grid-cell:not(:first-child) {
+  border-left: var(--grid-borders);
+}
+
 .status {
   font-size: 2rem;
+  height: 2rem;
   place-content: center left;
 }
 
@@ -198,10 +208,6 @@ button.reset:active {
 }
 
 @media (max-width: 1100px) {
-  .header {
-    margin-top: auto;
-  }
-
   .controls,
   .status {
     display: flex;
@@ -210,19 +216,7 @@ button.reset:active {
 
   main {
     grid-template-columns: unset;
-  }
-
-  .grid-container {
-    height: 400px;
-    width: 400px;
-  }
-
-  .status {
-    height: 2rem;
-  }
-
-  .footer {
-    margin-top: auto;
+    place-content: center;
   }
 }
 
@@ -231,8 +225,9 @@ button.reset:active {
     padding: 20px;
   }
 
-  .header h1 {
-    margin-bottom: 20px;
+  .header {
+    padding: 24px;
+    text-align: center;
   }
 
   main {
@@ -242,6 +237,10 @@ button.reset:active {
   .grid-container {
     height: 300px;
     width: 300px;
+  }
+
+  .grid-cell {
+    font-size: 2.8rem;
   }
 
   .status {
