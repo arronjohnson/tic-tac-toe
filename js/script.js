@@ -37,7 +37,7 @@ const gameboard = (() => {
       return;
     }
 
-    element.textContent = game.getCurrentPlayer().marker;
+    element.textContent = game.getCurrentPlayer().getMarker();
     _grid[row][column] = game.getCurrentPlayer();
     game.switchTurn();
     checkGrid();
@@ -94,7 +94,13 @@ const gameboard = (() => {
 })();
 
 const Player = (marker) => {
-  return { marker };
+  const _marker = marker;
+
+  const getMarker = () => {
+    return _marker;
+  };
+
+  return { getMarker };
 };
 
 const game = (() => {
@@ -124,7 +130,7 @@ const game = (() => {
     if (_winner === "tie") {
       console.log("It's a tie!");
     } else {
-      console.log(`${winner.marker} is the winner!`);
+      console.log(`${winner.getMarker()} is the winner!`);
     }
   };
 
