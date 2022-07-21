@@ -162,6 +162,7 @@ button.reset:active {
   display: flex;
   flex-direction: column;
   height: 500px;
+  touch-action: pinch-zoom;
   width: 500px;
 }
 
