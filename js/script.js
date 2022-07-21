@@ -124,6 +124,8 @@ const game = (() => {
   const _status = document.querySelector(".status");
 
   const start = () => {
+    if (_gameStarted) return;
+
     _gameStarted = true;
     _currentPlayer = _player1;
     _winner = null;
