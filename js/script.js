@@ -130,12 +130,13 @@ const game = (() => {
     if (_gameStarted) return;
 
     const _playerNames = controls.getPlayerNames();
+    const _randomInt = Math.floor(Math.random() * 2);
     _gameStarted = true;
     _player1 = Player(_playerNames[0], "X");
     _player2 = Player(_playerNames[1], "O");
-    _currentPlayer = _player1;
+    _currentPlayer = _randomInt === 0 ? _player1 : _player2;
     _winner = null;
-    controls.setStatusText(`${_player1.getName()}'s turn`);
+    controls.setStatusText(`${_currentPlayer.getName()}'s turn`);
   };
 
   const getCurrentPlayer = () => {
