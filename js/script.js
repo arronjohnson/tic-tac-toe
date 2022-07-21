@@ -43,4 +43,11 @@ const gameboard = (() => {
   return { drawGrid };
 })();
 
+const Player = (marker) => {
+  return { marker };
+};
+
+const player = Player("X");
+const ai = Player("O");
+
 gameboard.drawGrid();
