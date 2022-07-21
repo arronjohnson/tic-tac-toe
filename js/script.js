@@ -47,7 +47,27 @@ const Player = (marker) => {
   return { marker };
 };
 
-const player = Player("X");
-const ai = Player("O");
+const game = (() => {
+  let currentTurn;
+
+  const player1 = Player("X");
+  const player2 = Player("O");
+
+  const start = () => {
+    obj.currentTurn = player1;
+  };
+
+  const switchTurn = () => {
+    obj.currentTurn = obj.currentTurn === player1 ? player2 : player1;
+  };
+
+  const obj = {
+    currentTurn,
+    start,
+    switchTurn,
+  };
+  return obj;
+})();
 
 gameboard.drawGrid();
+game.start();
