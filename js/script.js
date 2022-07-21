@@ -27,17 +27,17 @@ const gameboard = (() => {
       }
       container.appendChild(rowElement);
     }
+  };
 
-    const fillCell = (element) => {
-      const row = element.getAttribute("data-row");
-      const column = element.getAttribute("data-column");
+  const fillCell = (element) => {
+    const row = element.getAttribute("data-row");
+    const column = element.getAttribute("data-column");
 
-      if (grid[row][column] !== "") return;
+    if (grid[row][column] !== "") return;
 
-      element.textContent = "X";
-      grid[row][column] = "X";
-      console.log(`Set ${row} ${column} to X`);
-    };
+    element.textContent = "X";
+    grid[row][column] = "X";
+    console.log(`Set ${row} ${column} to X`);
   };
 
   return { drawGrid };
