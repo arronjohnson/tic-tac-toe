@@ -1,3 +1,6 @@
+//
+// Gameboard
+//
 const gameboard = (() => {
   const _grid = [];
 
@@ -104,6 +107,9 @@ const gameboard = (() => {
   return { drawGrid, reset };
 })();
 
+//
+// Player
+//
 const Player = (name, marker) => {
   const _name = name;
   const _marker = marker;
@@ -119,6 +125,9 @@ const Player = (name, marker) => {
   return { getName, getMarker };
 };
 
+//
+// Game
+//
 const game = (() => {
   let _gameStarted;
   let _player1;
@@ -184,6 +193,9 @@ const game = (() => {
   };
 })();
 
+//
+// Controls
+//
 const controls = (() => {
   const _form = document.querySelector(".modal-content");
   const _inputP1 = document.getElementById("p1name");
@@ -229,4 +241,7 @@ const controls = (() => {
   return { getPlayerNames, setStatusText };
 })();
 
+//
+// Initialize game grid
+//
 gameboard.drawGrid();
