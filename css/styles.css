@@ -2,10 +2,12 @@
 
 :root {
   --accent: #3689fc;
+  --grid-borders: 1px solid #000;
 }
 
 html {
   box-sizing: border-box;
+  height: 100%;
 }
 
 *,
@@ -15,7 +17,10 @@ html {
 }
 
 body {
+  display: grid;
   font-family: "Roboto", sans-serif;
+  min-height: 100%;
+  place-content: center;
 }
 
 a {
@@ -32,8 +37,37 @@ a:hover {
   text-align: center;
 }
 
+.header h1 {
+  margin: 0 0 32px;
+}
+
+.grid-container {
+  border-bottom: var(--grid-borders);
+  border-left: var(--grid-borders);
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 500px;
+}
+
+.grid-row {
+  display: flex;
+  flex: 1;
+}
+
+.grid-cell {
+  border-right: var(--grid-borders);
+  border-top: var(--grid-borders);
+  display: grid;
+  height: 100%;
+  place-content: center;
+  font-size: 4rem;
+  width: 100%;
+}
+
 .footer {
   font-size: 1.2rem;
+  margin-top: 32px;
   text-align: center;
 }
 
