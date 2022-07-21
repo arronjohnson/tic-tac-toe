@@ -33,7 +33,7 @@ const gameboard = (() => {
     const row = element.getAttribute("data-row");
     const column = element.getAttribute("data-column");
 
-    if (game.isFinished() || _grid[row][column] !== "") {
+    if (!game.isStarted() || game.isFinished() || _grid[row][column] !== "") {
       return;
     }
 
@@ -90,7 +90,18 @@ const gameboard = (() => {
     }
   };
 
-  return { drawGrid };
+  const reset = () => {
+    const gridCells = document.querySelectorAll(".grid-cell");
+    gridCells.forEach((e) => (e.textContent = ""));
+
+    for (row in _grid) {
+      for (column in _grid[row]) {
+        _grid[row][column] = "";
+      }
+    }
+  };
+
+  return { drawGrid, reset };
 })();
 
 const Player = (marker) => {
@@ -104,15 +115,19 @@ const Player = (marker) => {
 };
 
 const game = (() => {
+  let _gameStarted;
   let _currentPlayer;
   let _winner;
 
-  const player1 = Player("X");
-  const player2 = Player("O");
+  const _player1 = Player("X");
+  const _player2 = Player("O");
+  const _status = document.querySelector(".status");
 
   const start = () => {
-    _currentPlayer = player1;
+    _gameStarted = true;
+    _currentPlayer = _player1;
     _winner = null;
+    _setStatusText(`${_player1.getMarker()}'s turn`);
   };
 
   const getCurrentPlayer = () => {
@@ -120,7 +135,8 @@ const game = (() => {
   };
 
   const switchTurn = () => {
-    _currentPlayer = _currentPlayer === player1 ? player2 : player1;
+    _currentPlayer = _currentPlayer === _player1 ? _player2 : _player1;
+    _setStatusText(`${_currentPlayer.getMarker()}'s turn`);
   };
 
   const setWinner = (winner) => {
@@ -128,14 +144,30 @@ const game = (() => {
 
     _winner = winner;
     if (_winner === "tie") {
-      console.log("It's a tie!");
+      _setStatusText("It's a tie!");
     } else {
-      console.log(`${winner.getMarker()} is the winner!`);
+      _setStatusText(`${_winner.getMarker()} is the winner!`);
     }
+  };
+
+  const isStarted = () => {
+    return _gameStarted;
   };
 
   const isFinished = () => {
     return _winner !== null;
+  };
+
+  const _setStatusText = (msg) => {
+    _status.textContent = msg;
+  };
+
+  const reset = () => {
+    _gameStarted = false;
+    _currentPlayer = null;
+    _winner = null;
+    _setStatusText("");
+    gameboard.reset();
   };
 
   return {
@@ -143,9 +175,18 @@ const game = (() => {
     getCurrentPlayer,
     switchTurn,
     setWinner,
+    isStarted,
     isFinished,
+    reset,
   };
 })();
 
+const controls = (() => {
+  const _startBtn = document.querySelector("button.start");
+  const _resetBtn = document.querySelector("button.reset");
+
+  _startBtn.addEventListener("click", () => game.start());
+  _resetBtn.addEventListener("click", () => game.reset());
+})();
+
 gameboard.drawGrid();
-game.start();
